@@ -1,23 +1,37 @@
-import logo from './logo.svg';
-import './App.css';
+import "./App.css";
+import { useState } from "react";
+
+export const replaceCamelWithSpaces = (colorName) => {
+  return colorName.replace(/\B([A-Z])\B/g, " $1");
+};
 
 function App() {
+  const [buttonColor, setButtonColor] = useState("red");
+  const [disabled, setDisabled] = useState(false);
+  const newButtonColor = buttonColor === "red" ? "blue" : "red";
+  const handleClickButton = () => {
+    setButtonColor(newButtonColor);
+  };
+  const handleClickCheckbox = () => {
+    setDisabled((disabled) => !disabled);
+  };
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <button
+        disabled={disabled}
+        style={{ backgroundColor: disabled ? "gray" : buttonColor }}
+        onClick={handleClickButton}
+      >
+        Change to {newButtonColor}
+      </button>
+      <input
+        type="checkbox"
+        id="disable-button-checkbox"
+        defaultChecked={disabled}
+        aria-checked={disabled}
+        onClick={handleClickCheckbox}
+      />
+      <label htmlFor="disable-button-checkbox">Disabled button</label>
     </div>
   );
 }
